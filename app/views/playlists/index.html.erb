@@ -1,0 +1,13 @@
+<h2>Playlists</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% @playlists.each do |playlist| %>
+      <tr>
+        <td><%= playlist.id %></td>
+        <td><%= playlist.name %></td>
+      </tr>
+  <% end %>
+</table>

@@ -1,0 +1,12 @@
+<h2>Playlist</h2>
+
+<table>
+  <tr>
+    <th>@playlist.name</th>
+  </tr>
+  <% @playlist.playlist_songs.each do |song| %>
+      <tr>
+        <td><%= song.id %></td>
+      </tr>
+  <% end %>
+</table>

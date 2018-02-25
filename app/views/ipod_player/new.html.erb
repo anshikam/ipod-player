@@ -1,0 +1,15 @@
+<%= form_with scope: :song, url: songs_path, local: true do |form| %>
+    <p>
+      <%= form.label :name %><br>
+      <%= form.text_field :name %>
+    </p>
+
+    <p>
+      <%= form.label :artist %><br>
+      <%= form.text_field :artist %>
+    </p>
+
+    <p>
+      <%= form.submit %>
+    </p>
+<% end %>
