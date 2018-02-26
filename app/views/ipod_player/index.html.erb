@@ -1,18 +1,110 @@
-<h2>IPod Player</h2>
-<p>Sort by Name</p>
-<p>Sort by Artist</p>
+<html>
+<head>
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
 
+  <style>
+    body {
+      margin: 30px;
+    }
+
+    [type="radio"] {
+      opacity: 1 !important;
+    }
+
+    select {
+      display: block;
+    }
+
+    div a:after, div button:after {
+      content: "";
+      display: block;
+      height: 0;
+      width: 1px;
+    }
+  </style>
+</head>
+<h2>IPod Player</h2>
+<div>
+  <%= link_to 'Sort by Name', ipod_player_sort_path('name'), remote: true, id: 'sort_name' %>
+  <%= link_to 'Sort by Artist', ipod_player_sort_path('artist'), remote: true , id: 'sort_artist'%>
+  <%= link_to 'Add Song', new_song_path, id: 'add_song'%>
+  <%= link_to 'Shuffle', ipod_player_shuffle_all_path, remote: true, id: 'shuffle'%>
+  <button id="delete_song">Delete Song</button>
+</div>
+<div>
+<label>Playlists</label>
+<select id="playlist">
+  <option value="" selected disabled>Choose a playlist</option>
+  <% @playlists.each do |playlist| %>
+    <option value=<%= playlist.id %> id="playlist"><%= playlist.name %></option>
+  <% end %>
+</select>
+  <button id="add_song_to_playlist">Add Song To Playlist</button>
+</div>
 <table>
   <tr>
-    <th>Artist</th>
+    <th></th>
+    <th hidden></th>
     <th>Name</th>
+    <th>Artist</th>
   </tr>
   <% @songs.each do |song| %>
-      <tr>
-        <td><%= song.id %></td>
+      <tr class="songs">
+        <td>
+          <input class="radio" name="song" type="radio" value=<%= song.id %>/>
+        </td>
         <td><%= song.name %></td>
         <td><%= song.artist %></td>
-
       </tr>
   <% end %>
 </table>
+
+<script>
+  $(document).ready(function() {
+    $("a#sort_name").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("a#sort_artist").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("a#shuffle").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("#add_song_to_playlist").on("click", function(e){
+      var songId = $('input[class=radio]:checked').val();
+      var playListId = $('#playlist').val();
+      $.ajax({ url: '/playlist/' + playListId +'/add_song/' + songId, method: 'POST'}).done(function(e,data,status,xhr){
+        debugger;
+      })
+    })
+
+    $("button#delete_song").on("click", function(e){
+      var songId = $('input[class=radio]:checked').val();
+      $.ajax({ url: '/songs/'+songId, method: 'DELETE'}).done(function(e,data,status,xhr){
+        debugger;
+      })
+    })
+  })
+</script>
+</html>
+
+

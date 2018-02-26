@@ -1,6 +1,9 @@
 class IpodPlayerController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     @songs = Song.all
+    @playlists = Playlist.all
   end
 
   def new
@@ -14,9 +17,38 @@ class IpodPlayerController < ApplicationController
     redirect_to songs_path
   end
 
-  def delete
-    Song.destroy(params.require(:song).permit(:id))
-    redirect_to songs_path
+  def destroy
+    @destroy_params = params.permit(:id)
+    @message = ""
+    begin
+      Song.destroy(@destroy_params[:id])
+    rescue
+      @message = "Song exists in a playlist. Remove from playlist first."
+    end
+    @songs = Song.all
+    if @message.empty?
+      redirect_to songs_path and return
+    end
+    respond_to do |format|
+      format.json {render :json => @message}
+    end
+  end
+
+  def sort
+    @field = params.permit(:field)
+    @songs = Song.order(@field[:field])
+
+    respond_to do |format|
+      format.json {render :json => @songs}
+    end
+  end
+
+  def shuffle_all
+    @songs = Song.all.shuffle
+
+    respond_to do |format|
+      format.json {render :json => @songs}
+    end
   end
 
 end

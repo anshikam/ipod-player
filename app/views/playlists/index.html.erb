@@ -1,13 +1,17 @@
 <h2>Playlists</h2>
 
+<%= link_to 'Add Playlist', new_playlist_path, id: 'add_playlist'%>
+
 <table>
   <tr>
     <th>Name</th>
   </tr>
   <% @playlists.each do |playlist| %>
       <tr>
-        <td><%= playlist.id %></td>
+        <td hidden><%= playlist.id %></td>
         <td><%= playlist.name %></td>
+        <td><%= link_to 'Show', playlist_path(playlist) %></td>
       </tr>
   <% end %>
 </table>
+

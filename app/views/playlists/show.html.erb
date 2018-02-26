@@ -1,12 +1,62 @@
-<h2>Playlist</h2>
+<h2>Playlist <%= @playlist.name %></h2>
+<p id="playlistId" hidden><%= @playlist.id %></p>
+<%= link_to 'Sort by Name', playlist_sort_path(@playlist.id, 'name'), remote: true,id: 'sort_name' %>
+<%= link_to 'Sort by Artist', playlist_sort_path(@playlist.id, 'artist'), remote: true , id: 'sort_artist'%>
+<%= link_to 'Shuffle', playlist_shuffle_path(@playlist.id), remote: true , id: 'shuffle'%>
+<button id="delete_song">Delete Song</button>
 
 <table>
   <tr>
-    <th>@playlist.name</th>
+    <th></th>
+    <th>Name</th>
+    <th>Artist</th>
   </tr>
-  <% @playlist.playlist_songs.each do |song| %>
-      <tr>
-        <td><%= song.id %></td>
+  <% @playlist.playlist_songs.each do |playlist_song| %>
+      <tr class="songs">
+        <td>
+          <input class="radio" name="song" type="radio" value=<%= playlist_song.song_id %>/>
+        </td>
+        <td><%= playlist_song.song.name %></td>
+        <td><%= playlist_song.song.artist %></td>
       </tr>
   <% end %>
 </table>
+
+<script>
+  $(document).ready(function() {
+    $("a#sort_name").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("a#sort_artist").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("a#shuffle").on("ajax:success", function(e, data, status, xhr){
+      $.each($('tr.songs'), function(index,value){
+        var song = $(value);
+        var data = e.detail[0][index];
+        song.find('td')[1].innerHTML = data['name'];
+        song.find('td')[2].innerHTML = data['artist'];
+      });
+    })
+
+    $("button#delete_song").on("click", function(e){
+      debugger;
+      var songId = $('input[class=radio]:checked').val();
+      $.ajax({ url: '/playlist/' + $('#playlistId')[0].innerHTML + '/delete_song/'+songId, method: 'POST'}).done(function(e,data,status,xhr){
+        debugger;
+      })
+    })
+  })
+</script>
