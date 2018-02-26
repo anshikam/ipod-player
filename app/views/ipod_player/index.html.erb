@@ -1,15 +1,17 @@
 <html>
 <head>
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
   <style>
     body {
-      margin: 30px;
+      margin-right: 200px;
+      margin-left: 200px;
     }
 
     [type="radio"] {
       opacity: 1 !important;
+      pointer-events: all !important;
     }
 
     select {
@@ -31,6 +33,8 @@
   <%= link_to 'Add Song', new_song_path, id: 'add_song'%>
   <%= link_to 'Shuffle', ipod_player_shuffle_all_path, remote: true, id: 'shuffle'%>
   <button id="delete_song">Delete Song</button>
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
 </div>
 <div>
 <label>Playlists</label>
@@ -62,6 +66,8 @@
 
 <script>
   $(document).ready(function() {
+    $($('tr.songs')[0]).addClass("teal lighten-2");
+
     $("a#sort_name").on("ajax:success", function(e, data, status, xhr){
       $.each($('tr.songs'), function(index,value){
         var song = $(value);
@@ -102,6 +108,21 @@
       $.ajax({ url: '/songs/'+songId, method: 'DELETE'}).done(function(e,data,status,xhr){
         debugger;
       })
+    })
+
+    $("button#prev").on("click", function(e){
+      var $currentSong = $($('tr.songs.teal.lighten-2')[0]);
+      $currentSong.removeClass('teal lighten-2');
+      var prev = $currentSong.prev();
+      prev.addClass('teal lighten-2');
+
+    })
+
+    $("button#next").on("click", function(e){
+      var $currentSong = $($('tr.songs.teal.lighten-2')[0]);
+      $currentSong.removeClass('teal lighten-2');
+      var next = $currentSong.next();
+      next.addClass('teal lighten-2');
     })
   })
 </script>
