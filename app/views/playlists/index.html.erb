@@ -1,3 +1,31 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  <style>
+    body {
+      margin-right: 200px;
+      margin-left: 200px;
+    }
+
+    [type="radio"] {
+      opacity: 1 !important;
+      pointer-events: all !important;
+    }
+
+    select {
+      display: block;
+    }
+
+    div a:after, div button:after {
+      content: "";
+      display: block;
+      height: 0;
+      width: 1px;
+    }
+  </style>
+</head>
+
 <h2>Playlists</h2>
 
 <%= link_to 'Add Playlist', new_playlist_path, id: 'add_playlist'%>

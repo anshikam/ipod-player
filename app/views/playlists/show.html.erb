@@ -1,3 +1,30 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  <style>
+    body {
+      margin-right: 200px;
+      margin-left: 200px;
+    }
+
+    [type="radio"] {
+      opacity: 1 !important;
+      pointer-events: all !important;
+    }
+
+    select {
+      display: block;
+    }
+
+    div a:after, div button:after {
+      content: "";
+      display: block;
+      height: 0;
+      width: 1px;
+    }
+  </style>
+</head>
 <h2>Playlist <%= @playlist.name %></h2>
 <p id="playlistId" hidden><%= @playlist.id %></p>
 <%= link_to 'Sort by Name', playlist_sort_path(@playlist.id, 'name'), remote: true,id: 'sort_name' %>
