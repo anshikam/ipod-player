@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple iPod player API that lets you perform the following actions on the HTTP routes :
 
-Things you may want to cover:
+/songs
+Displays all Songs
 
-* Ruby version
+Add Song
+Delete Song
+Add Song To Playlist
+Sort by Artist
+Sort by Name
+Shuffle
+Prev
+Next
 
-* System dependencies
+/playlists
+Displays all playlists
+Add new playlist
+Go to playlist
 
-* Configuration
+/playlists/:id
+Display all Songs in Playlist
+Remove Song From Playlist
+Sort By Artist
+Sort By Name
+Shuffle
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

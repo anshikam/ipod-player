@@ -3,7 +3,7 @@
 <%= link_to 'Sort by Name', playlist_sort_path(@playlist.id, 'name'), remote: true,id: 'sort_name' %>
 <%= link_to 'Sort by Artist', playlist_sort_path(@playlist.id, 'artist'), remote: true , id: 'sort_artist'%>
 <%= link_to 'Shuffle', playlist_shuffle_path(@playlist.id), remote: true , id: 'shuffle'%>
-<button id="delete_song">Delete Song</button>
+<button id="delete_song">Remove Song From Playlist</button>
 
 <table>
   <tr>

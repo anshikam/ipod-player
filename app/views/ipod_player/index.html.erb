@@ -99,12 +99,12 @@
       var songId = $('input[class=radio]:checked').val();
       var playListId = $('#playlist').val();
       $.ajax({ url: '/playlist/' + playListId +'/add_song/' + songId, method: 'POST'}).done(function(e,data,status,xhr){
-        debugger;
       })
     })
 
     $("button#delete_song").on("click", function(e){
       var songId = $('input[class=radio]:checked').val();
+      debugger;
       $.ajax({ url: '/songs/'+songId, method: 'DELETE'}).done(function(e,data,status,xhr){
         debugger;
       })
